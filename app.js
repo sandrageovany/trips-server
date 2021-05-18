@@ -51,7 +51,7 @@ app.use(
       sameSite: true, //the client and the server are on the same domain (Localhost)
       secure: false, //not using https
       httpOnly: true,
-      maxAge: 60000, //expiration time in millisecond
+      maxAge: 600000000, //expiration time in millisecond
     },
     rolling: true, //session gets refreshed in the user is active
   })
@@ -74,9 +74,6 @@ app.use(cors({
 
 const index = require('./routes/index');
 app.use('/', index);
-
-const destinations = require('./routes/destination-routes');
- app.use('/api', destinations);
 
 const itinerary = require('./routes/itinerary-routes');
 app.use('/api', itinerary);
