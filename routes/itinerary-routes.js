@@ -24,6 +24,7 @@ router.get('/trips', async (req, res) => {
 
 //Add new Itinerary
 router.post('/trips', async (req, res) => {
+  const { title, destinations } = req.body;
   try {
     if (!req.user) {
       res.status(400).json('user must be logged in');
@@ -31,9 +32,9 @@ router.post('/trips', async (req, res) => {
     }
     
     const itinerary = await Itinerary.create({
-      title: req.body.title,
-      user: req.user._id,
-      destinations: req.body.destinations,
+      title,
+      user: req.user,
+      destinations: destinations
     });
     res.status(200).json(itinerary);
   } catch (e) {
@@ -44,6 +45,7 @@ router.post('/trips', async (req, res) => {
 //Update new Itinerary
 router.put('/trip/:id', async (req, res) => {
   try {
+
     // check if user is logged in
     if (!req.user) {
       res.status(400).json('user must be logged in');
@@ -52,19 +54,17 @@ router.put('/trip/:id', async (req, res) => {
     //check if user owns the trip
     const id = req.params.id;
     let trip= await Itinerary.findById(id);
-    console.log(trip.user);
-    console.log(req.user._id != trip.user)
-
-    // if (req.user.id !== trip.user) {
-    //       res.status(400).json('user doesnt match');
-    //       return;
-    //     }
+   
+     if (req.user._id.toString() !== trip.user._id.toString()) {
+           res.status(400).json('user doesnt match');
+           return;
+    }
     
     //Updating the db with what the user entered in the front end
     const itinerary = await Itinerary.findOne({ _id: id })
  
     if (req.body.title) {
-      itinerary.title = req.body.title
+      itinerary.title =req.body.title
     }
      
     if (req.body.destinations) {
