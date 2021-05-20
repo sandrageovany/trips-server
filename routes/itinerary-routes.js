@@ -25,6 +25,8 @@ router.get('/trips', async (req, res) => {
 //Add new Itinerary
 router.post('/trips', async (req, res) => {
   const { title, destinations } = req.body;
+  console.log("title", title);
+  console.log("destinations", destinations)
   try {
     if (!req.user) {
       res.status(400).json('user must be logged in');
@@ -60,7 +62,7 @@ router.put('/trip/:id', async (req, res) => {
            return;
     }
     
-    //Updating the db with what the user entered in the front end
+    //Updating the db with what the user entered in the frontend
     const itinerary = await Itinerary.findOne({ _id: id })
  
     if (req.body.title) {

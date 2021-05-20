@@ -10,8 +10,8 @@ const itinerarySchema = new Schema({
   destinations: [
     {
       name: String,
-      lat: String,
-      lng: String,
+      lat: Number,
+      lng: Number,
     },
   ],
 });
