@@ -48,9 +48,9 @@ app.use(
     saveUninitialized: true,
     resave: false,
     cookie: {
-      sameSite: true, //the client and the server are on the same domain (Localhost)
-      secure: false, //not using https
-      httpOnly: true,
+      sameSite:'none', //true, //the client and the server are on the same domain (Localhost)
+      secure: true, //false, //not using https
+      httpOnly: false, //true,
       maxAge: 600000000, //expiration time in millisecond
     },
     rolling: true, //session gets refreshed in the user is active
